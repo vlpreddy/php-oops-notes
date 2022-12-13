@@ -1,0 +1,84 @@
+Why do we need a trait.
+
+A class or abstract classs has a parent or base work very well in sharing logic.
+PHP does not allow you to extend two classes at the same time, so we can resolve this issue using traits.
+trait decleration is very similar to a class, we use 'use' inside class to to use these traits then it will act as a extended class.
+But you need to import at the top of the file using 'use'.
+/**** CLASS ZONE START ****/
+Class 1 : 
+abstract class BaseCarClass{
+  public function wheels(){
+   return "Has four wheels";
+  }
+  abstract public function seats();
+}
+
+
+Class 2
+use path\Convertable.  /* First trait import */
+use path\Luxury.  /* Second trait import */
+
+Class BmwClass extends BaseCarClass{
+/* First and Second trait use inside class, but if we need to use instead of or alias we need to open flower brackets and write other wise you can simply say (use Convertible, Luxury )  */
+  use Convertible, Luxury  {
+  Luxury::dropRootButton insteadof Convertable; // this line actually saying to compiler use the dropRootButton function from Luxury trait but not Convertable trait
+  Convertable::dropRoofButton as dropSoftTopButton; // this line actually saying to compiler use a different name for this function and use it so in way we don't need to worry of ignoring the function from Convertable trait as well.
+  }
+
+  public function seats() {
+    return "has 2 seats"
+  }
+}
+
+$bmw = new BmwClass();
+echo $bmw->seats();
+echo $bmw->dropRoofButton(); /* Calling functionf from First trait refer line 24 since two traits has same name */
+echo $bmw->sportMode(); /* Calling function from Second trait -  */
+echo $bmw->dropSoftTopButton(); /* refer line 25*/
+echo $bmw->Wheels; /* here you have wheels method in base class and traits class as well, here trait defnitely overwrites wheels method which is written in base class(Class-1) */
+echo $bmw->seats(); /* if you have a method in a trait, and if you have a method in class that uses trat, the here method in the class defnitely overwrites trait.(Class-2) */
+// here if we see, i have used dropRoofButton which is written in trait as it as extended class.
+// Here we get error because two trait classes has function with same name(dropRoofButton()), to resolve this we have two options 
+      //one is to tell compiler use only one of them by using keyword "insteadof"
+      //Two is we can give alias name to the same function
+// These two options can be done in base class
+
+
+/**** CLASS ZONE END ****/
+
+
+/**** TRAITS ZONE START ****/
+
+Trait:1
+
+trait Convertable
+{
+
+public function dropRoofButton(){
+  return "Drop soft top";
+}
+
+}
+
+Trait 2
+
+trait Luxury {
+  public function dropRoofButton(){
+   return "Drop Hard top";
+  }
+  
+  public function sportMode(){
+   return "Go Very fast";
+  }
+  
+  public function seats(){
+   return "Has two leather ceats";
+  }
+  
+  public function wheels(){
+    return "Has four run flat wheels";
+  }
+} 
+
+
+/**** TRAITS ZONE END ****/
