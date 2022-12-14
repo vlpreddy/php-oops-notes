@@ -1,0 +1,29 @@
+1. Cannot instantiate object from abstract class.
+2. If you extend the abstract class and the method is defined as a abstract(abstract function methodNAme(); ) class 
+   and child class must consist abstract method defined.
+
+abstract Class Field {
+  public function __construct(protected string $name){
+  
+  }
+  
+   abstract public function render();
+
+  
+}
+
+Class Text extends Field {
+
+  public function render():string {
+    return <<<<<<<HTML. <input type="text" name="{$this>name}" />  HTML>>>>>>
+  }
+
+}
+
+Class Boolean extends Field {
+
+ public function render():string {
+    return <<<<<<<HTML. <input type="text" name="{$this>name}" />  HTML>>>>>>
+  }
+
+}
